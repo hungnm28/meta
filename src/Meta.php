@@ -57,7 +57,7 @@ class Meta
      * @param $defaults
      * @return string
      */
-    public function display($displayTitle = false, $defaults = [])
+    public function display( $defaults = [],$displayTitle = false)
     {
         $metaAttributes = array_replace_recursive($defaults, $this->attributes);
         $results = array();
