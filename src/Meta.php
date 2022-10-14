@@ -33,6 +33,7 @@ class Meta
      * @param $data
      * @return array
      */
+    /*
     public function setJsonLDs($data = [])
     {
         $this->jsonLD = array_replace_recursive($this->jsonLD, $data);
@@ -44,6 +45,7 @@ class Meta
      * @param $data
      * @return array
      */
+    /*
     public function setLinks($data = [])
     {
         $this->links = array_replace_recursive($this->links, $data);
@@ -82,6 +84,7 @@ class Meta
     /**
      * @return string
      */
+    /*
     public function displayJsonLDs()
     {
         $results = [];
@@ -94,6 +97,7 @@ class Meta
     /**
      * @return string
      */
+    /*
     public function displayLinks()
     {
         $results = [];
@@ -210,6 +214,7 @@ class Meta
      * @param $content
      * @return string
      */
+
     private function jsonLdTag($content)
     {
         return '<script type="application/ld+json">' . $content . '</script>';
