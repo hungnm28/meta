@@ -42,6 +42,7 @@ class Meta
         $this->description = $this->validateData(data_get($data, "description", $this->description));
         $this->url = data_get($data, "url", $this->url);
         $this->metas = data_get($data, "meta", $this->metas);
+        $this->links = data_get($data, "link", $this->links);
         $this->jsons = data_get($data, "json", $this->jsons);
         $this->breadcrumb = data_get($data, "breadcrumb", $this->breadcrumb);
     }
