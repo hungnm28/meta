@@ -23,6 +23,15 @@ class Meta
         $this->url = $this->validateData(data_get($data, "url", $this->url));
     }
 
+    public function setAll($data)
+    {
+        $this->title = $this->validateData(data_get($data, "title", $this->title));
+        $this->teaser = $this->validateData(data_get($data, "teaser", $this->teaser));
+        $this->metas = data_get($data, "meta", $this->metas);
+        $this->jsons = data_get($data, "json", $this->jsons);
+        $this->breadcrumb = data_get($data, "breadcrumb", $this->breadcrumb);
+    }
+
     public function setJson($data, $name)
     {
         $this->jsons[$name] = $data;
@@ -74,14 +83,14 @@ class Meta
 
     public function showBreadcrumb()
     {
-        return '<script type="application/ld+json">' . json_encode($this->breadcrumb,JSON_UNESCAPED_UNICODE) . '</script>';
+        return '<script type="application/ld+json">' . json_encode($this->breadcrumb, JSON_UNESCAPED_UNICODE) . '</script>';
     }
 
     public function showJson()
     {
         $results = [];
         foreach ($this->jsons as $json) {
-            $results[] = '<script type="application/ld+json">' . json_encode($json,JSON_UNESCAPED_UNICODE) . '</script>';
+            $results[] = '<script type="application/ld+json">' . json_encode($json, JSON_UNESCAPED_UNICODE) . '</script>';
         }
         return implode("\n", $results);
     }
