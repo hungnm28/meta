@@ -26,7 +26,7 @@ class Meta
     public function setAll($data)
     {
         $this->title = $this->validateData(data_get($data, "title", $this->title));
-        $this->teaser = $this->validateData(data_get($data, "teaser", $this->teaser));
+        $this->description = $this->validateData(data_get($data, "description", $this->description));
         $this->metas = data_get($data, "meta", $this->metas);
         $this->jsons = data_get($data, "json", $this->jsons);
         $this->breadcrumb = data_get($data, "breadcrumb", $this->breadcrumb);
