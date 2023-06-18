@@ -1,0 +1,29 @@
+{
+    "name": "hungnm28/meta",
+    "description": "THhis package used for generate meta tags.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hungnm28\\Meta\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "HungNM28",
+            "email": "nguyenmanhhung28@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\Hungnm28\\Meta\\MetaServiceProvider"
+            ],
+            "aliases": {
+                "Meta": "\\Hungnm28\\Meta\\Facade\\Meta"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
