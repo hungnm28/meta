@@ -14,6 +14,19 @@ class Meta
         "itemListElement" => []
 
     ];
+    public $colors = [
+        "c50" => "#f0fdf4",
+        "c100" => "#dcfce7",
+        "c200" => "#bbf7d0",
+        "c300" => "#86efac",
+        "c400" => "#4ade80",
+        "c500" => "#22c55e",
+        "c600" => "#16a34a",
+        "c700" => "#15803d",
+        "c800" => "#166534",
+        "c900" => "#14532d",
+        "c950" => "#052e16",
+    ];
 
 
     public function set($data)
@@ -38,7 +51,7 @@ class Meta
         $this->jsons[$name] = $data;
     }
 
-    public function setBreadcrumb($data, $k = '')
+    public function setBreadcrumb($name,$url, $k = '')
     {
         if ($k != "") {
             $k = intval($k);
@@ -48,8 +61,8 @@ class Meta
         $this->breadcrumb["itemListElement"][$k] = [
             "@type" => "ListItem",
             "position" => $k + 1
-            , "name" => $data["name"]
-            , "item" => $data["item"]
+            , "name" => $name
+            , "item" => $url
         ];
     }
 
@@ -138,10 +151,29 @@ class Meta
                     $result[$k] = $this->showLink($link);
                 }
             }
-            return implode("\n", $result);
         }
+        return implode("\n", $result);
     }
 
+    public function setColor($data)
+    {
+        if ($data) {
+            $this->colors["c50"] = $data->c50;
+            $this->colors["c100"] = $data->c100;
+            $this->colors["c200"] = $data->c200;
+            $this->colors["c300"] = $data->c300;
+            $this->colors["c400"] = $data->c400;
+            $this->colors["c500"] = $data->c500;
+            $this->colors["c600"] = $data->c600;
+            $this->colors["c700"] = $data->c700;
+            $this->colors["c800"] = $data->c800;
+            $this->colors["c900"] = $data->c900;
+            $this->colors["c950"] = $data->c950;
+        }
+    }
+    public function getColors(){
+        return $this->colors;
+    }
     private function showLink($data)
     {
         $str = '<link ';
