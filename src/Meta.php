@@ -74,14 +74,14 @@ class Meta
 
     public function showBreadcrumb()
     {
-        return '<script type="application/ld+json">' . json_encode($this->breadcrumb) . '</script>';
+        return '<script type="application/ld+json">' . json_encode($this->breadcrumb,JSON_UNESCAPED_UNICODE) . '</script>';
     }
 
     public function showJson()
     {
         $results = [];
         foreach ($this->jsons as $json) {
-            $results[] = '<script type="application/ld+json">' . json_encode($json) . '</script>';
+            $results[] = '<script type="application/ld+json">' . json_encode($json,JSON_UNESCAPED_UNICODE) . '</script>';
         }
         return implode("\n", $results);
     }
