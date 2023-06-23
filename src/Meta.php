@@ -8,12 +8,6 @@ class Meta
     public $metas = [];
     public $links = [];
     public $jsons = [];
-    public $breadcrumb = [
-        "@context" => "https://schema.org",
-        "@type" => "BreadcrumbList",
-        "itemListElement" => []
-
-    ];
     public $colors = [
         "c50" => "#f0fdf4",
         "c100" => "#dcfce7",
@@ -44,7 +38,6 @@ class Meta
         $this->metas = data_get($data, "meta", $this->metas);
         $this->links = data_get($data, "link", $this->links);
         $this->jsons = data_get($data, "json", $this->jsons);
-        $this->breadcrumb = data_get($data, "breadcrumb", $this->breadcrumb);
     }
 
     public function setJson($data, $name)
@@ -52,18 +45,33 @@ class Meta
         $this->jsons[$name] = $data;
     }
 
-    public function setBreadcrumb($name,$url, $k = '')
+    public function removeJson($key)
     {
+        $jsons = $this->jsons;
+        if (isset($jsons[$key])) {
+            unset($jsons[$key]);
+        }
+        $this->jsons = $jsons;
+    }
+
+    public function setBreadcrumb($name, $url, $k = '')
+    {
+        $data = data_get($this->jsons, 'breadcrumb.itemListElement', []);
         if ($k != "") {
             $k = intval($k);
         } else {
-            $k = count($this->breadcrumb["itemListElement"]);
+            $k = $data;
         }
-        $this->breadcrumb["itemListElement"][$k] = [
+        $data[$k] = [
             "@type" => "ListItem",
             "position" => $k + 1
             , "name" => $name
             , "item" => $url
+        ];
+        $this->jsons['breadcrumb'] = [
+            "@context" => "https://schema.org",
+            "@type" => "BreadcrumbList",
+            "itemListElement" => $data
         ];
     }
 
@@ -98,7 +106,16 @@ class Meta
 
     public function showBreadcrumb()
     {
-        return '<script type="application/ld+json">' . json_encode($this->breadcrumb, JSON_UNESCAPED_UNICODE) . '</script>';
+        $data = data_get($this->jsons, "breadcrumb.itemListElement", []);
+        if (empty($data) || !is_array($data)) {
+            return null;
+        }
+        $rt = '<ul class="breadcrumb">';
+        foreach ($data as $item) {
+            $rt .= '<li class="item"><a href="' . $item['item'] . '" title="' . $item['name'] . '">' . $item['name'] . '</a></li>';
+        }
+        $rt .= '</ul>';
+        return $rt;
     }
 
     public function showJson()
@@ -159,22 +176,25 @@ class Meta
     public function setColor($data)
     {
         if ($data) {
-            $this->colors["c50"] = $data->c50;
-            $this->colors["c100"] = $data->c100;
-            $this->colors["c200"] = $data->c200;
-            $this->colors["c300"] = $data->c300;
-            $this->colors["c400"] = $data->c400;
-            $this->colors["c500"] = $data->c500;
-            $this->colors["c600"] = $data->c600;
-            $this->colors["c700"] = $data->c700;
-            $this->colors["c800"] = $data->c800;
-            $this->colors["c900"] = $data->c900;
-            $this->colors["c950"] = $data->c950;
+            $this->colors["c50"] = data_get($data, "c50", $this->colors["c50"]);
+            $this->colors["c100"] = data_get($data, "c100", $this->colors["c100"]);
+            $this->colors["c200"] = data_get($data, "c200", $this->colors["c200"]);
+            $this->colors["c300"] = data_get($data, "c300", $this->colors["c300"]);
+            $this->colors["c400"] = data_get($data, "c400", $this->colors["c400"]);
+            $this->colors["c500"] = data_get($data, "c500", $this->colors["c500"]);
+            $this->colors["c600"] = data_get($data, "c600", $this->colors["c600"]);
+            $this->colors["c700"] = data_get($data, "c700", $this->colors["c700"]);
+            $this->colors["c800"] = data_get($data, "c800", $this->colors["c800"]);
+            $this->colors["c900"] = data_get($data, "c900", $this->colors["c900"]);
+            $this->colors["c950"] = data_get($data, "c950", $this->colors["c950"]);
         }
     }
-    public function getColors(){
+
+    public function getColors()
+    {
         return $this->colors;
     }
+
     private function showLink($data)
     {
         $str = '<link ';
