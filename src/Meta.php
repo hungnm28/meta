@@ -38,6 +38,8 @@ class Meta
         $this->metas = data_get($data, "meta", $this->metas);
         $this->links = data_get($data, "link", $this->links);
         $this->jsons = data_get($data, "json", $this->jsons);
+        $color = data_get($data,"color",[]);
+        $this->setColor($color);
     }
 
     public function setJson($data, $name)
@@ -60,7 +62,7 @@ class Meta
         if ($k != "") {
             $k = intval($k);
         } else {
-            $k = $data;
+            $k = count($data);
         }
         $data[$k] = [
             "@type" => "ListItem",
