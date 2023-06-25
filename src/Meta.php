@@ -225,7 +225,7 @@ class Meta
 
     private function validateData($str)
     {
-        $str = strip_tags($str);
+        $str = htmlspecialchars($str);
         $str = trim($str);
         return $str;
     }
