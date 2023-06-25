@@ -202,7 +202,6 @@ class Meta
         $str = '<link ';
         foreach ($data as $name => $val) {
             if ($name != "" && $val != "") {
-                $val = $this->validateData($val);
                 $str .= "$name=\"$val\" ";
             }
         }
